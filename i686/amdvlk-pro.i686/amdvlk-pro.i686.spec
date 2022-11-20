@@ -2,51 +2,35 @@
 
 # global info
 %global repo   22.20.4
-%global major 22.20
+%global major  22.20
 %global minor  1498766
-# pkg info
-%global amf 1.4.26
-%global enc 1.0
-#
-%global amdvlk 2022.Q3.3
-#
-%global drm 2.4.110.50203
-%global amdgpu 1.0.0.50203
 # Distro info
-%global fedora fc36
 %global ubuntu 22.04
 
-Name:     amdvlk-pro
-Version:  %{repo}
-Release:  4%{?dist}
+Name:          amdvlk-pro
+Version:       %{repo}
+Release:       4%{?dist}
 License:       AMDGPU PRO  EULA NON-REDISTRIBUTABLE
 Group:         System Environment/Libraries
 Summary:       AMD Vulkan
-URL:      http://repo.radeon.com/amdgpu
+URL:           http://repo.radeon.com/amdgpu
 
 %undefine _disable_source_fetch
-Source0:  http://repo.radeon.com/amdgpu/%{repo}/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}~%{ubuntu}_i386.deb
+Source0:       http://repo.radeon.com/amdgpu/%{repo}/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}~%{ubuntu}_i386.deb
 
-Provides:      config(amdvlk-pro) = %{major}-%{release}
 Provides:      amdvlk-pro = %{major}-%{release}
 Provides:      amdvlk-pro(i686) = %{major}-%{release}
-Provides:      config(vulkan-amdgpu-pro) = %{major}-%{minor}~%{ubuntu}
-Provides:      vulkan-amdgpu-pro = %{major}-%{minor}~%{ubuntu}
-Provides:      vulkan-amdgpu-pro(i686) = %{major}-%{minor}~%{ubuntu}
-
-
-Recommends:	 openssl-libs  
 
 BuildRequires: wget 
 BuildRequires: cpio
 
-Requires(post): /sbin/ldconfig  
+Requires(post):   /sbin/ldconfig
 Requires(postun): /sbin/ldconfig 
 
 Requires:      vulkan-loader
-Requires:      libdrm-pro(i686) 
+Requires:      openssl-libs
 
-Recommends:	 amdgpu-vulkan-switcher(x86_64)
+Recommends:    amdgpu-vulkan-switcher(x86_64)
 
 %description
 Amdgpu Pro Vulkan driver
@@ -59,16 +43,20 @@ tar -xJC files -f data.tar.xz || tar -xC files -f data.tar.gz
 
 %install
 mkdir -p %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}
-mkdir -p %{buildroot}/opt/amdgpu-pro/vulkan/etc/vulkan/icd.d/
+mkdir -p %{buildroot}/opt/amdgpu-pro/etc/vulkan/implicit_layer.d/
 mkdir -p %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
+mkdir -p %{buildroot}/opt/amdgpu-pro/share/licenses/
 #
 cp -r files/opt/amdgpu-pro/lib/i386-linux-gnu/* %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}/
-cp -r files/opt/amdgpu-pro/etc/vulkan/icd.d/* %{buildroot}/opt/amdgpu-pro/vulkan/etc/vulkan/icd.d/
+rm -r files/etc
+cp -r files/opt/amdgpu-pro/etc/vulkan/icd.d/* %{buildroot}/opt/amdgpu-pro/etc/vulkan/implicit_layer.d/
+cp -r files/opt/amdgpu-pro/etc/vulkan/icd.d/* %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
+rm -v files/usr/share/doc/vulkan-amdgpu-pro/changelog.Debian.gz
+mv -v files/usr/share/doc/vulkan-amdgpu-pro/copyright %{buildroot}/opt/amdgpu-pro/share/licenses/LICENSE-%{name}_%{_arch}-%{repo}-%{minor}.txt
 #
-echo "fixing .icds "
-sed -i "s#/opt/amdgpu-pro/lib/i386-linux-gnu/amdvlk32.so#/opt/amdgpu-pro/vulkan/%{_lib}/amdvlk32.so#" "%{buildroot}/opt/amdgpu-pro/vulkan/etc/vulkan/icd.d/amd_icd32.json"
-#
-ln -s /opt/amdgpu-pro/vulkan/etc/vulkan/icd.d/amd_icd32.json %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
+echo "Fixing ICDs"
+sed -i "s#/opt/amdgpu-pro/lib/i386-linux-gnu/amdvlk32.so#/opt/amdgpu-pro/vulkan/%{_lib}/amdvlk32.so#" "%{buildroot}/opt/amdgpu-pro/etc/vulkan/implicit_layer.d/amd_icd32.json"
+sed -i "s#/opt/amdgpu-pro/lib/i386-linux-gnu/amdvlk32.so#/opt/amdgpu-pro/vulkan/%{_lib}/amdvlk32.so#" "%{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd32.json"
 #
 echo "adding *Disabled* library path"
 mkdir -p %{buildroot}/etc/ld.so.conf.d
@@ -77,9 +65,10 @@ echo "#/opt/amdgpu-pro/vulkan/%{_lib}" > %{buildroot}/etc/ld.so.conf.d/amdvlk-pr
 
 %files
 "/etc/ld.so.conf.d/amdvlk-pro-%{_arch}.conf"
-"/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd32.json"
 "/opt/amdgpu-pro/vulkan/%{_lib}/amdvlk32*"
-"/opt/amdgpu-pro/vulkan/etc/vulkan/icd.d/amd_icd32.json"
+"/opt/amdgpu-pro/etc/vulkan/implicit_layer.d/amd_icd32.json"
+"/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd32.json"
+"/opt/amdgpu-pro/share/licenses/LICENSE-%{name}_%{_arch}-%{repo}-%{minor}.txt"
 
 %post
 /sbin/ldconfig
