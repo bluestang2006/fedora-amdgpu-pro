@@ -6,7 +6,7 @@
 
 Name:          amdvlk
 Version:       %{amdvlk}
-Release:       1%{distro}
+Release:       1%{dist}
 License:       MIT 
 Group:         System Environment/Libraries
 Summary:       AMD Open Source Driver for Vulkan
