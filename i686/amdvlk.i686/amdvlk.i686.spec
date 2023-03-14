@@ -1,7 +1,7 @@
 %define _build_id_links none
 
 # global info
-%global amdvlk 2023.Q1.2
+%global amdvlk 2023.Q1.3
 
 
 Name:          amdvlk

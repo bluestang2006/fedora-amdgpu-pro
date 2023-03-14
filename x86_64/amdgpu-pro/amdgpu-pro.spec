@@ -21,11 +21,11 @@ Source0:       http://repo.radeon.com/amdgpu/%{repo}/ubuntu/pool/proprietary/v/v
 Provides:      amdgpu-pro = %{major}-%{release}
 Provides:      amdgpu-pro(x86_64) = %{major}-%{release}
 
-BuildRequires: wget 
+BuildRequires: wget
 BuildRequires: cpio
 
 Requires(post):   /sbin/ldconfig
-Requires(postun): /sbin/ldconfig 
+Requires(postun): /sbin/ldconfig
 
 Requires:      vulkan-loader
 Requires:      openssl-libs
@@ -42,11 +42,11 @@ ar x --output . %{SOURCE0}
 tar -xJC files -f data.tar.xz || tar -xC files -f data.tar.gz
 
 %install
-mkdir -p %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
 mkdir -p %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}
+mkdir -p %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
 mkdir -p %{buildroot}/opt/amdgpu-pro/share/licenses/amdgpu-pro
 #
-rm -r files/etc
+#rm -r files/etc
 cp -r files/opt/amdgpu-pro/lib/x86_64-linux-gnu/* %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}/
 cp -r files/opt/amdgpu-pro/etc/vulkan/icd.d/* %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
 rm -v files/usr/share/doc/vulkan-amdgpu-pro/changelog.Debian.gz
@@ -62,8 +62,8 @@ echo "#/opt/amdgpu-pro/vulkan/%{_lib}" > %{buildroot}/etc/ld.so.conf.d/amdgpu-pr
 
 %files
 "/etc/ld.so.conf.d/amdgpu-pro-%{_arch}.conf"
-"/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd64.json"
 "/opt/amdgpu-pro/vulkan/%{_lib}/amdvlk64.so"
+"/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd64.json"
 "/opt/amdgpu-pro/share/licenses/LICENSE-%{name}_%{_arch}-%{major}-%{repo}.txt"
 
 %post
