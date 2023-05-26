@@ -1,9 +1,9 @@
 %define _build_id_links none
 
 # global info
-%global repo   5.4.5
-%global major  22.40
-%global minor  1577631
+%global repo   5.5.1
+%global major  23.10
+%global minor  1595145
 # Distro info
 %global ubuntu 22.04
 
