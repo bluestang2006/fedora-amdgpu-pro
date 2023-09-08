@@ -51,8 +51,8 @@ rpmbuild -bb --define "_srcrpmdir $(pwd)/../../packages " --undefine=_disable_so
 cd ../../
 
 # Clean
-sudo rm -r BUILD
-sudo rm -r BUILDROOT
+rm -fr BUILD
+rm -fr BUILDROOT
 
 # Move rpms to packages
 

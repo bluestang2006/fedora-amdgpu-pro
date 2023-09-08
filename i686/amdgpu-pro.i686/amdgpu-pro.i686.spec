@@ -3,7 +3,7 @@
 # global info
 %global repo   23.20
 %global major  23.20
-%global minor  1646758
+%global minor  1646757
 # Distro info
 %global ubuntu 22.04
 
@@ -16,7 +16,7 @@ Summary:       AMD Vulkan
 URL:           http://repo.radeon.com/amdgpu
 
 %undefine _disable_source_fetch
-Source0:       http://repo.radeon.com/amdgpu/%{repo}/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}.%{ubuntu}_i386.deb
+Source0:       http://repo.radeon.com/amdgpu/%{repo}/amdgpu/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}.%{ubuntu}_i386.deb
 
 Provides:      amdgpu-pro = %{major}-%{release}
 Provides:      amdgpu-pro(i686) = %{major}-%{release}
@@ -46,7 +46,7 @@ mkdir -p %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
 mkdir -p %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}
 mkdir -p %{buildroot}/opt/amdgpu-pro/share/licenses/amdgpu-pro
 #
-rm -r files/etc
+#rm -r files/etc
 cp -r files/opt/amdgpu-pro/lib/i386-linux-gnu/* %{buildroot}/opt/amdgpu-pro/vulkan/%{_lib}/
 cp -r files/opt/amdgpu-pro/etc/vulkan/icd.d/* %{buildroot}/opt/amdgpu-pro/etc/vulkan/icd.d/
 rm -v files/usr/share/doc/vulkan-amdgpu-pro/changelog.Debian.gz
