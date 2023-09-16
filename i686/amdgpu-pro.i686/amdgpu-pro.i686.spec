@@ -1,9 +1,9 @@
 %define _build_id_links none
 
 # global info
-%global repo   23.20
+%global repo   5.7
 %global major  23.20
-%global minor  1646757
+%global minor  1654522
 # Distro info
 %global ubuntu 22.04
 
@@ -16,7 +16,7 @@ Summary:       AMD Vulkan
 URL:           http://repo.radeon.com/amdgpu
 
 %undefine _disable_source_fetch
-Source0:       http://repo.radeon.com/amdgpu/%{repo}/amdgpu/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}.%{ubuntu}_i386.deb
+Source0:       http://repo.radeon.com/amdgpu/%{repo}/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_%{major}-%{minor}.%{ubuntu}_i386.deb
 
 Provides:      amdgpu-pro = %{major}-%{release}
 Provides:      amdgpu-pro(i686) = %{major}-%{release}
