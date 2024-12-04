@@ -1,11 +1,11 @@
 %define _build_id_links none
 
 # global info
-%global repo   6.1.3
-%global major  24.10
-%global minor  1787253
+%global repo   6.2.3
+%global major  24.20
+%global minor  2044449
 # Distro info
-%global ubuntu 22.04
+%global ubuntu 24.04
 
 Name:          amdgpu-pro
 Version:       %{major}
