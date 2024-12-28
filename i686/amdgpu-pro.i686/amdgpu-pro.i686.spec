@@ -1,9 +1,9 @@
 %define _build_id_links none
 
 # global info
-%global repo   6.2.3
-%global major  24.20
-%global minor  2044449
+%global repo   6.3
+%global major  24.30
+%global minor  2079599
 # Distro info
 %global ubuntu 24.04
 
